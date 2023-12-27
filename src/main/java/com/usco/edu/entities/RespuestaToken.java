@@ -3,9 +3,7 @@ package com.usco.edu.entities;
 import java.io.Serializable;
 
 public class RespuestaToken  implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	
 	private boolean estado;

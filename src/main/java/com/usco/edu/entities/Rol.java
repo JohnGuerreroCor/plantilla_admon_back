@@ -2,29 +2,54 @@ package com.usco.edu.entities;
 
 import java.io.Serializable;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@NoArgsConstructor
-@Data
+@Entity
+public class Rol implements Serializable {
 
-public class Rol implements Serializable{
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	private int id;
+
+	@Column(name="role", length = 30)
+	private String nombre_rol;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNombre_rol() {
+		return nombre_rol;
+	}
+
+	public void setNombre_rol(String nombre_rol) {
+		this.nombre_rol = nombre_rol;
+	}
+
 	
-	private static final long serialVersionUID = 1L;
 
-	private int codigo;
+	public Rol(int id, String nombre_rol) {
+		this.id = id;
+		this.nombre_rol = nombre_rol;
 
-	private String nombre;
-
-	private String estamento;
-
-	private String descripcion;
-	
-	private int estado;
+	}
 
 	@Override
 	public String toString() {
-		return "Rol [codigo=" + codigo + ", nombre=" + nombre + ", estamento=" + estamento + ", descripcion=" + descripcion +  "]";
+		return "Role [id=" + id + ", nombre_rol=" + nombre_rol + "]";
 	}
+
+
+
+	private static final long serialVersionUID = 1L;
 
 }

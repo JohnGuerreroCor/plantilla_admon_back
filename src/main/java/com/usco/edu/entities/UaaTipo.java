@@ -21,9 +21,6 @@ public class UaaTipo implements Serializable{
 	@Column(name = "uat_nombre")
 	private String nombre;
 	
-	//@Column(name = "uat_estado")
-	//private int estado;
-	
 	public UaaTipo() {
 		// TODO Auto-generated constructor stub
 	}
@@ -48,14 +45,6 @@ public class UaaTipo implements Serializable{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-	//public int getEstado() {
-	//	return estado;
-	/*}
-
-	public void setEstado(int estado) {
-		this.estado = estado;
-	}*/
 
 	@Override
 	public String toString() {

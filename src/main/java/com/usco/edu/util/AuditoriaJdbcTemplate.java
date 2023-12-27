@@ -24,7 +24,6 @@ public class AuditoriaJdbcTemplate {
 	
 	
 	public NamedParameterJdbcTemplate construirTemplatenew(DataSource dataSource ) {
-		//DataSource dataSource = this.construirDataSourceDeUsuario(usuario);
 		return new NamedParameterJdbcTemplate(dataSource);
 		
 	}

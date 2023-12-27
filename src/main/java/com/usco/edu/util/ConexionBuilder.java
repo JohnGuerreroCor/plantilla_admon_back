@@ -25,12 +25,6 @@ public class ConexionBuilder {
 		
 		dataSource = dataSourceBuilder.build();
 		return dataSource;
-		/* return DataSourceBuilder.create()
-	              .driverClassName(driverProperties)
-	              .url(urlProperties)
-	              .username(usuario)
-	              .password(clave)
-	              .build();*/
 	}
 	
 	private String buildUrl(String usuario , String clave) {

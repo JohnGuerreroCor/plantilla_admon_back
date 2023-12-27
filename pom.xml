@@ -10,11 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>usco.edu.co</groupId>
-	<artifactId>graduados-administrador</artifactId>
+	<artifactId>plantilla-administrador</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<name>graduados-administrador</name>
-	<description>Sistema que administra la información de los graduados</description>
+	<name>plantilla-administrador</name>
+	<description>Plantilla inicial</description>
 
 	<properties>
 		<java.version>1.8</java.version>

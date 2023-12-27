@@ -6,16 +6,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.usco.edu.dao.IDocumentoDao;
-import com.usco.edu.util.AuditoriaJdbcTemplate;
 
 @Repository
 public class DocumentoDaoImpl implements IDocumentoDao {
 
 	@Autowired
-	private AuditoriaJdbcTemplate jdbcComponent;
-
-	@Autowired
-	@Qualifier("JDBCTemplatePlanesConsulta")
+	@Qualifier("JDBCTemplateUscoConsulta")
 	public JdbcTemplate jdbcTemplate;
 
 	@Override

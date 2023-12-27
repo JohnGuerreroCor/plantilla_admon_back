@@ -44,11 +44,6 @@ public class Uaa implements Serializable{
 	@NotFound(action = NotFoundAction.IGNORE)
 	private Sede sede;
 	
-//	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY)
-//	@JoinColumn(name = "mun_codigo")
-//	@NotFound(action = NotFoundAction.IGNORE)
-//	private Municipio municipio;
-	
 	@Column(name = "uaa_dependencia")
 	private int uaa_dependencia;
 	

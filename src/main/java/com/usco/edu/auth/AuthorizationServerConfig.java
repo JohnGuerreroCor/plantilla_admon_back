@@ -47,6 +47,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.authorizedGrantTypes("password", "refresh_token")
 		.accessTokenValiditySeconds(4800)
 		.refreshTokenValiditySeconds(4800);
+		// TIEMPO DE DURACIÓN DEL TOKEN DE INICIO DE SESIÓN 4800 = 2 HORAS APROXIMADAMENTE
 	}
 
 	@Override
