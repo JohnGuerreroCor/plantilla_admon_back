@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jndi.JndiTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 @Configuration
 @EnableTransactionManagement
 @Component
@@ -54,7 +55,7 @@ public class AppConfig {
 		return jdbcTemplate;
 	}
 	
-	@Bean(name = "NamedJDBCTemplateUscoConsulta")
+	@Bean(name = "NamedJDBCTemplateEncuestasConsulta")
 	public NamedParameterJdbcTemplate jdbcTemplateConsulta() throws Exception {
 
 		return new NamedParameterJdbcTemplate(dataSource);

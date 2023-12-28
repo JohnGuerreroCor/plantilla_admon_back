@@ -25,7 +25,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		
-		//AGREGAR RUTAS DE PERMISO TANTO DEL FRONT EJEMPLO LÍNEA 39 SE AGRGAN LOS ARCHIVOS MULTIMEDIA DEL FRONT PARA PODERLOS VISUALIZAR UNA VEZ COMPILADOS Y DESPLEGADOS
+		//AGREGAR RUTAS DE PERMISO DEL FRONT EJEMPLO LÍNEA 39 SE AGRGAN LOS ARCHIVOS MULTIMEDIA DEL FRONT PARA PODERLOS VISUALIZAR UNA VEZ COMPILADOS Y DESPLEGADOS
 		http.authorizeRequests().antMatchers("/api").permitAll()
 		.antMatchers("/login").permitAll()
 		.antMatchers("/uaa").permitAll()

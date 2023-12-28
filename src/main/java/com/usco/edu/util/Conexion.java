@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
-
 public class Conexion {
 
 	public static boolean validarConexion(String driver, String url, String clave, String usuario) throws SQLException {
@@ -24,8 +22,6 @@ public class Conexion {
 			}
 		}
 	}
-	
-
 	
 	public static void cerrarConexion(Connection conexion) {
 		if (conexion != null) {

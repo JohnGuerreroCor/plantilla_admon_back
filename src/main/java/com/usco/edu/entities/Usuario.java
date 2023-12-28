@@ -48,7 +48,7 @@ public class Usuario implements Serializable {
 	private Persona persona;
 
 	@Column(name="gru_id")
-	private String rol;
+	private String role;
 
 	public int getId() {
 		return id;
@@ -82,12 +82,12 @@ public class Usuario implements Serializable {
 		this.state = state;
 	}
 
-	public String getRol() {
-		return rol;
+	public String getRole() {
+		return role;
 	}
 
-	public void setRol(String rol) {
-		this.rol = rol;
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	public Uaa getUaa() {
@@ -117,7 +117,7 @@ public class Usuario implements Serializable {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", username=" + username + ", password=" + password + ", userdb=" + userdb
-				+ ", state=" + state + ", uaa=" + uaa + ", persona=" + persona + ", rol=" + rol + "]";
+				+ ", state=" + state + ", uaa=" + uaa + ", persona=" + persona + ", role=" + role + "]";
 	}
 
 

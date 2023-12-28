@@ -38,7 +38,7 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 	private Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 	
 	@Autowired
-	private IUsuarioDao usuariodao;
+	private IUsuarioDao usuarioDao;
 	
 	@Autowired
 	private IInicioSesionDao inicioSesionDao;
@@ -57,14 +57,14 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 				.getRequest();
 		String segundaClave = request.getParameter("clave2");
 		
-		if (!usuariodao.validarUsuario(username)){
+		if (!usuarioDao.validarUsuario(username)){
 			logger.error("Error, no exite el usuario '"+username+"' en el sistema!!!");
 			throw new DisabledException("No exite el usuario en el sistema.");
 		}
-		Usuario usuario = usuariodao.buscarUsuario(username);
+		Usuario usuario = usuarioDao.buscarUsuario(username);
 
 		//con este List sacamos todos los roles del usuario que se esta autenticando		
-		Rol rol = new Rol(1,"ROLE_"+usuario.getRol());
+		Rol rol = new Rol(1,"ROLE_"+usuario.getRole());
 		ArrayList<Rol> roles  = new ArrayList<>();
 		roles.add(rol);
 		List<GrantedAuthority> authorities = roles
@@ -101,7 +101,7 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 	@Override
 	@Transactional(readOnly=true)
 	public Usuario buscarUsuario(String username) {
-		return usuariodao.buscarUsuario(username);
+		return usuarioDao.buscarUsuario(username);
 	}
 	
 	
