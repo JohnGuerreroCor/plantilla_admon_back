@@ -13,38 +13,30 @@ import com.usco.edu.rowMapper.UsuarioRowMapper;
 public class UsuarioDaoImpl implements IUsuarioDao{
 	
 	@Autowired
-	@Qualifier("JDBCTemplateUscoLogin")
+	@Qualifier("JDBCTemplateLogin")
 	public JdbcTemplate jdbcTemplate;
 
 	@Override
-	public Usuario buscarUsuario(String usuario) {
-		
+	public Usuario findByUsername(String username) {
 		String sql = "select * from dbo.usuario_graduado_admin_login ugal "
 				+ "inner join uaa u on u.uaa_codigo = ugal.usg_uaa "
 				+ "inner join sede s on s.sed_codigo = u.sed_codigo "
 				+ "inner join persona p on p.per_codigo = ugal.up "
 				+ "where  us = ? ";
-		
-		return jdbcTemplate.queryForObject(sql, new Object[] { usuario }, new UsuarioRowMapper());
-		
+		return jdbcTemplate.queryForObject(sql, new Object[] { username }, new UsuarioRowMapper());
 	}
 
 
 	@Override
-	public boolean validarUsuario(String usuario) {
-		
+	public boolean validarUser(String username) {
 		int result = 0;
-		
 		String sql = "select count(*) from dbo.usuario_graduado_admin_login ugal "
 				+ "inner join uaa u on u.uaa_codigo = ugal.usg_uaa "
 				+ "inner join sede s on s.sed_codigo = u.sed_codigo "
 				+ "inner join persona p on p.per_codigo = ugal.up "
 				+ "where  us = ? ";
-		
-		result =  jdbcTemplate.queryForObject(sql, new Object[] { usuario }, Integer.class);
-		
+		result =  jdbcTemplate.queryForObject(sql, new Object[] { username }, Integer.class);
 		return result > 0 ? true : false;
-		
 	}
 
 }

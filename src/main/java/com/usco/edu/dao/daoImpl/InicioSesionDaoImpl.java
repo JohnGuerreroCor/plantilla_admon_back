@@ -15,7 +15,7 @@ import com.usco.edu.dao.IInicioSesionDao;
 public class InicioSesionDaoImpl  implements IInicioSesionDao{
 
 	@Autowired
-	@Qualifier("JDBCTemplateUscoConsulta")
+	@Qualifier("JDBCTemplateConsulta")
 	public JdbcTemplate jdbcTemplate;
 
 	@Override

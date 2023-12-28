@@ -23,9 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.usco.edu.dao.IInicioSesionDao;
+import com.usco.edu.dao.ILoginDao;
 import com.usco.edu.dao.IUsuarioDao;
-import com.usco.edu.entities.Rol;
+import com.usco.edu.entities.Role;
 import com.usco.edu.entities.Usuario;
 import com.usco.edu.service.IUsuarioService;
 import com.usco.edu.util.ConexionBuilder;
@@ -38,10 +38,10 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 	private Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 	
 	@Autowired
-	private IUsuarioDao usuarioDao;
+	private IUsuarioDao usuariodao;
 	
 	@Autowired
-	private IInicioSesionDao inicioSesionDao;
+	private ILoginDao logindao;
 	
 	@Autowired
 	private SegundaClave segundaClaveComponent;
@@ -57,24 +57,24 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 				.getRequest();
 		String segundaClave = request.getParameter("clave2");
 		
-		if (!usuarioDao.validarUsuario(username)){
+		if (!usuariodao.validarUser(username)){
 			logger.error("Error, no exite el usuario '"+username+"' en el sistema!!!");
 			throw new DisabledException("No exite el usuario en el sistema.");
 		}
-		Usuario usuario = usuarioDao.buscarUsuario(username);
+		Usuario usuario = usuariodao.findByUsername(username);
 
 		//con este List sacamos todos los roles del usuario que se esta autenticando		
-		Rol rol = new Rol(1,"ROLE_"+usuario.getRole());
-		ArrayList<Rol> roles  = new ArrayList<>();
+		Role rol = new Role(1,"ROLE_"+usuario.getRole());
+		ArrayList<Role> roles  = new ArrayList<>();
 		roles.add(rol);
 		List<GrantedAuthority> authorities = roles
 				.stream()
-				.map(role -> new SimpleGrantedAuthority(((Rol) role).getNombre_rol()))
+				.map(role -> new SimpleGrantedAuthority(((Role) role).getNombre_rol()))
 				.peek(authority -> logger.info("Role: " + authority.getAuthority()))
 				.collect(Collectors.toList());
 				
 		//Segunda clave
-		String SegundaClaveReal = inicioSesionDao.obtenerSegundaClaveReal(segundaClave);
+		String SegundaClaveReal = logindao.obtenerSegundaClaveReal(segundaClave);
 
 		comprobarSegundaClave(usuario.getUserdb(),SegundaClaveReal);
 		segundaClaveComponent.setClave(username, SegundaClaveReal);
@@ -100,8 +100,8 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 
 	@Override
 	@Transactional(readOnly=true)
-	public Usuario buscarUsuario(String username) {
-		return usuarioDao.buscarUsuario(username);
+	public Usuario findByUsername(String username) {
+		return usuariodao.findByUsername(username);
 	}
 	
 	

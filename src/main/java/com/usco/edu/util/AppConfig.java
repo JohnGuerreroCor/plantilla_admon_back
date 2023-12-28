@@ -1,7 +1,6 @@
 package com.usco.edu.util;
 
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +25,7 @@ public class AppConfig {
 	private DataSource dataSource;
 	
 	
-	@Bean(name = "JDBCTemplateUscoConsulta")
+	@Bean(name = "JDBCTemplateConsulta")
 	public JdbcTemplate jdbcTemplateConsultasjdbc() throws Exception {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);
@@ -35,14 +34,14 @@ public class AppConfig {
 	}
 	
 	
-	@Bean(name = "JDBCTemplateUscoLogin")
+	@Bean(name = "JDBCTemplateLogin")
 	public JdbcTemplate jdbcTemplateLogin() throws Exception {
 
 		DataSource dataSource = null;
 
 		if (perfilSeleccionado.equals("local")) {
 
-			dataSource = (DataSource) new JndiTemplate().lookup("jboss/datasources/uscoLoginDS");
+			dataSource = (DataSource) new JndiTemplate().lookup("jboss/datasources/LoginDS");
 
 		} else if (perfilSeleccionado.equals("test") || perfilSeleccionado.equals("produccion")) {
 

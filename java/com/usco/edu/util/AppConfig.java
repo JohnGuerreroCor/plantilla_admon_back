@@ -25,7 +25,7 @@ public class AppConfig {
 	private DataSource dataSource;
 	
 	
-	@Bean(name = "JDBCTemplatePlanesConsulta")
+	@Bean(name = "JDBCTemplateUscoConsulta")
 	public JdbcTemplate jdbcTemplateConsultasjdbc() throws Exception {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);
@@ -34,7 +34,7 @@ public class AppConfig {
 	}
 	
 	
-	@Bean(name = "JDBCTemplatePlanesLogin")
+	@Bean(name = "JDBCTemplateUscoLogin")
 	public JdbcTemplate jdbcTemplateLogin() throws Exception {
 
 		DataSource dataSource = null;

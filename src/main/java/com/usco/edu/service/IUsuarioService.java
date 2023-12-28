@@ -4,6 +4,6 @@ import com.usco.edu.entities.Usuario;
 
 public interface IUsuarioService {
 
-	public Usuario buscarUsuario(String username);
+	public Usuario findByUsername(String username);
 	
 }
