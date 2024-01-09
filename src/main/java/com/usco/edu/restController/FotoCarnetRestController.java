@@ -27,6 +27,7 @@ public class FotoCarnetRestController {
 	@Autowired
 	IFotoCarnetService service;
 	
+    // ENDPOINT PARA SUBIR FOTO
 	@PostMapping("subir/{user}/{perCodigo}/{uaa}")
 	public void create(@PathVariable String user, @RequestPart MultipartFile foto,
 			HttpServletRequest request, @PathVariable String perCodigo, @PathVariable int uaa) {
@@ -35,6 +36,7 @@ public class FotoCarnetRestController {
 		service.subirFoto(foto, perCodigo, uaa, user, request);
 	}
 	
+    // ENDPOINT PARA OBTENER FOTO
 	@GetMapping("obtener-foto/{user}/{codigo}")
 	public ResponseEntity<InputStreamResource> foto(@PathVariable String user, HttpServletResponse response, @PathVariable String codigo) throws Exception{
 		ByteArrayInputStream stream = service.mirarFoto(codigo, user, response);
@@ -46,6 +48,7 @@ public class FotoCarnetRestController {
 		
 	}
 	
+    // ENDPOINT PARA OBTENER FOTO ANTIGUA
 	@GetMapping(path = "obtener-foto-antigua/{user}/{codigo}")
 	public FotoAntigua fotoAntigua(@PathVariable String user, @PathVariable String codigo) throws Exception{
 		return service.mirarFotoAntigua(codigo, user);

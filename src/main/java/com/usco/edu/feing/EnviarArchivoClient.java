@@ -16,10 +16,12 @@ import com.usco.edu.dto.RespuestaVerArchivo;
 @FeignClient(url = "${feign.url}", name = "subirarchivos")
 public interface EnviarArchivoClient {
 
+    // MÉTODO PARA SUBIR ARCHIVO
 	@PostMapping(value = "/api/v2/documento/subir", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public RespuestaSubirArchivo subirArchivo(@RequestPart("file") MultipartFile file,
 			@RequestHeader("Authorization") String auth, @RequestParam String jsonDocumento);
 
+    // MÉTODO PARA MOSTRAR ARCHIVO
 	@GetMapping(value = "/api/v2/documento/buscar-documento/{documento}")
 	public RespuestaVerArchivo mostrarArchivo(
 			@PathVariable long documento,

@@ -16,15 +16,18 @@ import com.usco.edu.dto.RespuestaVerFoto;
 @FeignClient(url = "${feign.foto.url}", name = "subirfoto")
 public interface EnviarFotoClient {
 	
+    // MÉTODO PARA SUBIR FOTO
 	@PostMapping(value = "/api/foto/subir2", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public RespuestaSubirFoto subirFoto(@RequestPart("file") MultipartFile file,
 			@RequestHeader("Authorization") String auth, @RequestParam String jsonFoto);
 
+    // MÉTODO PARA MOSTRAR FOTO
 	@GetMapping(value = "/api/foto/buscar-foto/{foto}")
 	public RespuestaVerFoto mostrarFoto(
 			@PathVariable String foto,
 			@RequestHeader("Authorization") String auth);
 	
+    // MÉTODO PARA MOSTRAR FOTO ANTIGUA
 	@GetMapping(value = "/api/foto/obtener-foto/{foto}")
 	public String mostrarFotoAntigua(
 			@PathVariable String foto,

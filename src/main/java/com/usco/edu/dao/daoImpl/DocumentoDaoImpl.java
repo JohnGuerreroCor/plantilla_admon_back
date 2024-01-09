@@ -6,26 +6,25 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.usco.edu.dao.IDocumentoDao;
-import com.usco.edu.util.AuditoriaJdbcTemplate;
 
 @Repository
 public class DocumentoDaoImpl implements IDocumentoDao {
 
-	@Autowired
-	private AuditoriaJdbcTemplate jdbcComponent;
+    @Autowired
+    @Qualifier("JDBCTemplateConsulta")
+    public JdbcTemplate jdbcTemplate;
 
-	@Autowired
-	@Qualifier("JDBCTemplateConsulta")
-	public JdbcTemplate jdbcTemplate;
+    @Override
+    public String obtenerTokenDocumento(String atributos, String user) {
+        // OBTENER EL TOKEN DEL DOCUMENTO SEGÚN LOS ATRIBUTOS Y EL USUARIO
+        String sql = "SELECT dbo.getTokenDocumento(?)";
+        return jdbcTemplate.queryForObject(sql, new Object[] { atributos }, String.class);
+    }
 
-	@Override
-	public String getKeyDocumento(String atributos, String user) {
-		String sql = "SELECT dbo.getTokenDocumento(?)";
-		return jdbcTemplate.queryForObject(sql, new Object[] { atributos }, String.class);
-	}
-	@Override
-	public String getKeyDocumentomirar(String atributos, String user) {
-		String sql = "SELECT dbo.getTokenDocumento(?) as token";
-		return jdbcTemplate.queryForObject(sql, new Object[] { atributos }, String.class);
-	}
+    @Override
+    public String obtenerTokenDocumentoVisualizar(String atributos, String user) {
+        // OBTENER EL TOKEN DEL DOCUMENTO PARA VISUALIZACIÓN SEGÚN LOS ATRIBUTOS Y EL USUARIO
+        String sql = "SELECT dbo.getTokenDocumento(?) as token";
+        return jdbcTemplate.queryForObject(sql, new Object[] { atributos }, String.class);
+    }
 }

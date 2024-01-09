@@ -1,6 +1,5 @@
 package com.usco.edu.restController;
 
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/obtenerFoto")
 public class FotoRestController {
 	
+    // ENDPOINT PARA OBTENER FOTO
 	@RequestMapping(value = "{codigo}", method = RequestMethod.GET)
 	public @ResponseBody void obtenerFoto(HttpServletResponse response, @PathVariable("codigo") String codigo)
 			throws IOException {

@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.usco.edu.dao.ILoginDao;
+import com.usco.edu.dao.IInicioSesionDao;
 import com.usco.edu.dao.IUsuarioDao;
 import com.usco.edu.entities.Role;
 import com.usco.edu.entities.Usuario;
@@ -33,78 +33,86 @@ import com.usco.edu.util.DisabledException;
 import com.usco.edu.util.SegundaClave;
 
 @Service
-public class UsuarioService implements UserDetailsService,IUsuarioService{
-	
-	private Logger logger = LoggerFactory.getLogger(UsuarioService.class);
-	
+public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
+
+	private Logger logger = LoggerFactory.getLogger(UsuarioServiceImpl.class);
+
 	@Autowired
 	private IUsuarioDao usuariodao;
-	
+
 	@Autowired
-	private ILoginDao logindao;
-	
+	private IInicioSesionDao inicioSesionDao;
+
 	@Autowired
 	private SegundaClave segundaClaveComponent;
-	
+
 	@Autowired
 	private ConexionBuilder conexionBuilder;
 
-
+	// IMPLEMENTACIÓN DEL MÉTODO DE LA INTERFAZ UserDetailsService
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes())
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
 		String segundaClave = request.getParameter("clave2");
-		
-		if (!usuariodao.validarUser(username)){
-			logger.error("Error, no exite el usuario '"+username+"' en el sistema!!!");
-			throw new DisabledException("No exite el usuario en el sistema.");
+
+		// VALIDAR SI EL USUARIO EXISTE EN EL SISTEMA
+		if (!usuariodao.validarUsuario(username)) {
+			logger.error("Error, no existe el usuario '" + username + "' en el sistema!!!");
+			throw new DisabledException("No existe el usuario en el sistema.");
 		}
-		Usuario usuario = usuariodao.findByUsername(username);
 
-		//con este List sacamos todos los roles del usuario que se esta autenticando		
-		Role rol = new Role(1,"ROLE_"+usuario.getRole());
-		ArrayList<Role> roles  = new ArrayList<>();
+		// OBTENER INFORMACIÓN DEL USUARIO
+		Usuario usuario = usuariodao.buscarUsuario(username);
+
+		// CREAR UNA INSTANCIA DE ROLE Y ASIGNARLE LOS ROLES DEL USUARIO
+		Role rol = new Role(1, "ROLE_" + usuario.getRole());
+		ArrayList<Role> roles = new ArrayList<>();
 		roles.add(rol);
-		List<GrantedAuthority> authorities = roles
-				.stream()
-				.map(role -> new SimpleGrantedAuthority(((Role) role).getNombre_rol()))
-				.peek(authority -> logger.info("Role: " + authority.getAuthority()))
-				.collect(Collectors.toList());
-				
-		//Segunda clave
-		String SegundaClaveReal = logindao.obtenerSegundaClaveReal(segundaClave);
 
-		comprobarSegundaClave(usuario.getUserdb(),SegundaClaveReal);
+		// CONVERTIR LOS ROLES A GRANTED AUTHORITIES
+		List<GrantedAuthority> authorities = roles.stream()
+				.map(role -> new SimpleGrantedAuthority(((Role) role).getNombre_rol()))
+				.peek(authority -> logger.info("Role: " + authority.getAuthority())).collect(Collectors.toList());
+
+		// OBTENER LA SEGUNDA CLAVE REAL
+		String SegundaClaveReal = inicioSesionDao.obtenerSegundaClaveReal(segundaClave);
+
+		// COMPROBAR LA SEGUNDA CLAVE
+		comprobarSegundaClave(usuario.getUserdb(), SegundaClaveReal);
+
+		// CONFIGURAR LA SEGUNDA CLAVE EN EL COMPONENTE
 		segundaClaveComponent.setClave(username, SegundaClaveReal);
 		segundaClaveComponent.setUser(username, usuario.getUserdb());
-			
-		
-		return new User(usuario.getUsername(),usuario.getPassword(), usuario.isState(),true,true,true,authorities);
+
+		// CREAR Y DEVOLVER UNA INSTANCIA DE USERDETAILS
+		return new User(usuario.getUsername(), usuario.getPassword(), usuario.isState(), true, true, true,
+				authorities);
 	}
-	
-	
-	private void comprobarSegundaClave(String UsuarioDb, String clave){
+
+	// MÉTODO PARA COMPROBAR LA SEGUNDA CLAVE
+	private void comprobarSegundaClave(String UsuarioDb, String clave) {
 		DataSource datasource = conexionBuilder.construir(UsuarioDb, clave);
-		Connection conexion = null ;
-		
+		Connection conexion = null;
+
 		try {
-			conexion =datasource.getConnection();
-		}catch (Exception e) {
+			conexion = datasource.getConnection();
+		} catch (Exception e) {
 			throw new DisabledException("La segunda clave es incorrecta.");
-		}finally {
+		} finally {
 			cerrarConexion(conexion);
 		}
 	}
 
+	// MÉTODO PARA BUSCAR UN USUARIO POR NOMBRE DE USUARIO
 	@Override
-	@Transactional(readOnly=true)
-	public Usuario findByUsername(String username) {
-		return usuariodao.findByUsername(username);
+	@Transactional(readOnly = true)
+	public Usuario buscarUsuario(String username) {
+		return usuariodao.buscarUsuario(username);
 	}
-	
-	
+
+	// MÉTODO PARA CERRAR LA CONEXIÓN
 	private void cerrarConexion(Connection conexion) {
 		if (conexion != null) {
 			try {

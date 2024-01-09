@@ -16,111 +16,52 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "dbo.usuario_graduado_admin_login")
+@Data
+@NoArgsConstructor
 public class Usuario implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "uid")
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "uid")
+    private int id;
 
-	@Column(name = "us",unique = true)
-	private String username;
+    @Column(name = "us", unique = true)
+    private String username;
 
-	@Column(name="uwd2")
-	private String password;
-	
-	@Column(name="sys")
-	private String userdb;
-	
-	@Column(name = "state")
-	private boolean state;
-	
-	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY)
-	@JoinColumn(name = "uaa_codigo")
-	@NotFound(action = NotFoundAction.IGNORE)
-	private Uaa uaa;
-	
-	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY)
-	@JoinColumn(name = "per_codigo")
-	@NotFound(action = NotFoundAction.IGNORE)
-	private Persona persona;
+    @Column(name = "uwd2")
+    private String password;
 
-	@Column(name="gru_id")
-	private String role;
+    @Column(name = "sys")
+    private String userdb;
 
-	public int getId() {
-		return id;
-	}
+    @Column(name = "state")
+    private boolean state;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY)
+    @JoinColumn(name = "uaa_codigo")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private Uaa uaa;
 
-	public String getUsername() {
-		return username;
-	}
+    @OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.LAZY)
+    @JoinColumn(name = "per_codigo")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private Persona persona;
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    @Column(name = "gru_id")
+    private String role;
 
-	public String getPassword() {
-		return password;
-	}
+    public String getUserdb() {
+        return userdb;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setUserdb(String userdb) {
+        this.userdb = userdb;
+    }
 
-	public boolean isState() {
-		return state;
-	}
-
-	public void setState(boolean state) {
-		this.state = state;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-	
-	public Uaa getUaa() {
-		return uaa;
-	}
-
-	public void setUaa(Uaa uaa) {
-		this.uaa = uaa;
-	}
-
-	public Persona getPersona() {
-		return persona;
-	}
-
-	public void setPersona(Persona persona) {
-		this.persona = persona;
-	}
-
-	public String getUserdb() {
-		return userdb;
-	}
-
-	public void setUserdb(String userdb) {
-		this.userdb = userdb;
-	}
-
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", username=" + username + ", password=" + password + ", userdb=" + userdb
-				+ ", state=" + state + ", uaa=" + uaa + ", persona=" + persona + ", role=" + role + "]";
-	}
-
-
-	private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 1L;
 }

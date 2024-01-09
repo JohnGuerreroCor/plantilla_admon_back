@@ -13,12 +13,12 @@ public class InicioSesionServiceImpl implements IInicioSesionService {
 	private IInicioSesionDao inicioSesionDao;
 
 	@Override
-	public String getTokenInicioSesion(String atributos, String userdb) {
-		return inicioSesionDao.getTokenInicioSesion(atributos, userdb);
+	public String obtenerTokenInicioSesion(String atributos, String userdb) {
+		return inicioSesionDao.obtenerTokenInicioSesion(atributos, userdb);
 	}
 
 	@Override
-	public String urltokenPeticion(String userdb) {
-		return inicioSesionDao.urltokenPeticion(userdb);
+	public String urlTokenPeticion(String userdb) {
+		return inicioSesionDao.urlTokenPeticion(userdb);
 	}
 }

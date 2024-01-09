@@ -11,31 +11,32 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 
 import com.usco.edu.entities.Usuario;
-import com.usco.edu.service.serviceImpl.UsuarioService;
+import com.usco.edu.service.serviceImpl.UsuarioServiceImpl;
 
 @Component
-public class InfoAdicionalToken implements TokenEnhancer{
-	
-	@Autowired
-	private UsuarioService usuarioService;
+public class InfoAdicionalToken implements TokenEnhancer {
 
-	@Override
-	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-		
-		Usuario usuario = usuarioService.findByUsername(authentication.getName());
-		Map<String, Object> info = new HashMap<>();
-		info.put("info_adicional", "Hola que tal!: ".concat(authentication.getName()));
-		info.put("per_codigo", usuario.getPersona().getCodigo());
-		info.put("ucod", usuario.getUaa().getCodigo());
-		info.put("uaa", usuario.getUaa().getNombreCorto());
-		info.put("nombre", usuario.getPersona().getNombre());
-		info.put("apellido",usuario.getPersona().getApellido());
-		
-		
-		
-		((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
-		
-		return accessToken;
-	}
+    @Autowired
+    private UsuarioServiceImpl usuarioService;
 
+    @Override
+    public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+
+        // OBTENER INFORMACIÓN ADICIONAL DEL USUARIO Y AGREGARLA AL TOKEN
+        Usuario usuario = usuarioService.buscarUsuario(authentication.getName());
+        Map<String, Object> info = new HashMap<>();
+        info.put("Informacion Token Inicio Sesion", "Campos Necesarios ".concat(authentication.getName()));
+        info.put("personaCodigo", usuario.getPersona().getCodigo());
+        info.put("uaaCodigo", usuario.getUaa().getCodigo());
+        info.put("uaaNombre", usuario.getUaa().getNombreCorto());
+        info.put("personaNombre", usuario.getPersona().getNombre());
+        info.put("personaApellido", usuario.getPersona().getApellido());
+        
+		//LAS VARIABLES ANTERIORES SE CARGAN EN EL TOKEN DE INICIO DE SESIÓN PARA IMPLEMENTAR DENTRO DEL APLICATIVO
+		//AGREGAR LAS NECESARIAS SEGÚN LA FUNCIONALIDAD A IMPLEMENTAR, TENER EN CUENTA MODIFICAR LA ENTIDAD Y ROWMAPPER PARA ELLO
+
+        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
+
+        return accessToken;
+    }
 }

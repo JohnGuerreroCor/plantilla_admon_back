@@ -1,8 +1,11 @@
 package com.usco.edu.auth;
 
 public class JwtConfig {
+	
+	// CLAVE SECRETA PARA FIRMA DE TOKENS
 	public static final String LLAVE_SECRETA = "alguna.clave.secreta.12345678";
 	
+	// CLAVE PRIVADA RSA PARA FIRMA DE TOKENS JWT
 	public static final String RSA_PRIVADA = "-----BEGIN RSA PRIVATE KEY-----\r\n" + 
 			"MIIEowIBAAKCAQEAwRRkppjNSOZkENkh8/JNk7vjVq1J7jRWT89ZrgOYbS7BkKDX\r\n" + 
 			"YYo3ylxi/Z7aQE5SYP1RIuz0Iw8ZuCsPr4Sh4nbkbWIPnthTB0ZWizmQCC2La81H\r\n" + 
@@ -31,6 +34,7 @@ public class JwtConfig {
 			"+E+YwC7OKZiSJ97cePVhMbTt5RrIkXSuQbjWAdZkC5BAUJEWTpvl\r\n" + 
 			"-----END RSA PRIVATE KEY-----";
 	
+	// CLAVE PÚBLICA RSA PARA VERIFICACIÓN DE TOKENS JWT
 	public static final String RSA_PUBLICA = "-----BEGIN PUBLIC KEY-----\r\n" + 
 			"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwRRkppjNSOZkENkh8/JN\r\n" + 
 			"k7vjVq1J7jRWT89ZrgOYbS7BkKDXYYo3ylxi/Z7aQE5SYP1RIuz0Iw8ZuCsPr4Sh\r\n" + 

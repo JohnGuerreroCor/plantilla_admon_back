@@ -13,12 +13,12 @@ import feign.form.spring.SpringFormEncoder;
 @Configuration
 public class FeignSimpleEncoderConfig {
 
-	@Autowired
-	private ObjectFactory<HttpMessageConverters> messageConverters;
+    @Autowired
+    private ObjectFactory<HttpMessageConverters> messageConverters;
 
-	@Bean
-	public Encoder feignFormEncoder() {
-		return new SpringFormEncoder(new SpringEncoder(messageConverters));
-	}
-
+    @Bean
+    public Encoder feignFormEncoder() {
+        // CONFIGURACIÓN DEL ENCODER PARA MANEJO DE FORMULARIOS EN FEIGN
+        return new SpringFormEncoder(new SpringEncoder(messageConverters));
+    }
 }

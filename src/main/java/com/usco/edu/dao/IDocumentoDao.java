@@ -2,8 +2,8 @@ package com.usco.edu.dao;
 
 public interface IDocumentoDao {
 
-	String getKeyDocumento(String atributos, String user);
+	String obtenerTokenDocumento(String atributos, String user);
 
-	String getKeyDocumentomirar(String atributos, String user);
+	String obtenerTokenDocumentoVisualizar(String atributos, String user);
 
 }

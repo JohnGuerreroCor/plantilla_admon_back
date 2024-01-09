@@ -17,62 +17,67 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-	
-	@Autowired
-	@Qualifier("authenticationManager")
-	private AuthenticationManager authenticationManager;
-	
-	@Autowired
-	private InfoAdicionalToken infoAdicionalToken;
-	
+    // CODIFICADOR DE CONTRASEÑAS BCRYPT
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
-	@Override
-	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		security.tokenKeyAccess("permitAll()")
-		.checkTokenAccess("isAuthenticated()");
-	}
+    // ADMINISTRADOR DE AUTENTICACIÓN
+    @Autowired
+    @Qualifier("authenticationManager")
+    private AuthenticationManager authenticationManager;
 
-	@Override
-	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient("angularapp")
-		.secret(passwordEncoder.encode("12345"))
-		.scopes("read", "write")
-		.authorizedGrantTypes("password", "refresh_token")
-		.accessTokenValiditySeconds(4800)
-		.refreshTokenValiditySeconds(4800);
-	}
+    // CLASE PARA AÑADIR INFORMACIÓN ADICIONAL AL TOKEN JWT
+    @Autowired
+    private InfoAdicionalToken infoAdicionalToken;
 
-	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-		tokenEnhancerChain.setTokenEnhancers(Arrays.asList(infoAdicionalToken, accessTokenConverter()));
-		
-		endpoints.authenticationManager(authenticationManager)
-		.tokenStore(tokenStore())
-		.accessTokenConverter(accessTokenConverter())
-		.tokenEnhancer(tokenEnhancerChain);
-	}
+    // CONFIGURACIÓN DE LA SEGURIDAD DEL SERVIDOR DE AUTORIZACIÓN
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.tokenKeyAccess("permitAll()") // PERMITE EL ACCESO PÚBLICO A LA CLAVE DEL TOKEN
+                .checkTokenAccess("isAuthenticated()"); // REQUIERE AUTENTICACIÓN PARA VALIDAR EL TOKEN
+    }
 
-	@Bean
-	public JwtTokenStore tokenStore() {
-		return new JwtTokenStore(accessTokenConverter());
-	}
+    // CONFIGURACIÓN DE CLIENTES AUTORIZADOS Y SUS DETALLES
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients.inMemory().withClient("angularapp")
+                .secret(passwordEncoder.encode("12345")) // CONTRASEÑA ENCRIPTADA
+                .scopes("read", "write") // ÁMBITOS DE ACCESO
+                .authorizedGrantTypes("password", "refresh_token") // TIPOS DE CONCESIÓN AUTORIZADOS
+                .accessTokenValiditySeconds(4800) // TIEMPO DE VALIDEZ DEL TOKEN DE ACCESO EN SEGUNDOS
+                .refreshTokenValiditySeconds(4800); // TIEMPO DE VALIDEZ DEL TOKEN DE ACTUALIZACIÓN EN SEGUNDOS
+    }
 
-	@Bean
-	public JwtAccessTokenConverter accessTokenConverter() {
-		JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-		jwtAccessTokenConverter.setSigningKey(JwtConfig.RSA_PRIVADA);
-		jwtAccessTokenConverter.setVerifierKey(JwtConfig.RSA_PUBLICA);
-		return jwtAccessTokenConverter;
-	}
-	
-	
+    // CONFIGURACIÓN DE LOS ENDPOINTS DEL SERVIDOR DE AUTORIZACIÓN
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        // CADENA DE MEJORADORES DE TOKEN
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(infoAdicionalToken, accessTokenConverter()));
+
+        endpoints.authenticationManager(authenticationManager) // CONFIGURACIÓN DEL ADMINISTRADOR DE AUTENTICACIÓN
+                .tokenStore(tokenStore()) // ALMACENAMIENTO DEL TOKEN
+                .accessTokenConverter(accessTokenConverter()) // CONVERTIDOR DEL TOKEN DE ACCESO
+                .tokenEnhancer(tokenEnhancerChain); // CADENA DE MEJORADORES DE TOKEN
+    }
+
+    // BEAN PARA EL ALMACENAMIENTO DE TOKENS JWT
+    @Bean
+    public JwtTokenStore tokenStore() {
+        return new JwtTokenStore(accessTokenConverter());
+    }
+
+    // BEAN PARA EL CONVERTIDOR DE TOKENS JWT
+    @Bean
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+        jwtAccessTokenConverter.setSigningKey(JwtConfig.RSA_PRIVADA); // CLAVE PRIVADA PARA FIRMAR EL TOKEN
+        jwtAccessTokenConverter.setVerifierKey(JwtConfig.RSA_PUBLICA); // CLAVE PÚBLICA PARA VERIFICAR LA FIRMA DEL TOKEN
+        return jwtAccessTokenConverter;
+    }
 
 }

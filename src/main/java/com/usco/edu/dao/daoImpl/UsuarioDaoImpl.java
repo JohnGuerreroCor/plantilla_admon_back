@@ -17,7 +17,7 @@ public class UsuarioDaoImpl implements IUsuarioDao{
 	public JdbcTemplate jdbcTemplate;
 
 	@Override
-	public Usuario findByUsername(String username) {
+	public Usuario buscarUsuario(String username) {
 		String sql = "select * from dbo.usuario_graduado_admin_login ugal "
 				+ "inner join uaa u on u.uaa_codigo = ugal.usg_uaa "
 				+ "inner join sede s on s.sed_codigo = u.sed_codigo "
@@ -28,7 +28,7 @@ public class UsuarioDaoImpl implements IUsuarioDao{
 
 
 	@Override
-	public boolean validarUser(String username) {
+	public boolean validarUsuario(String username) {
 		int result = 0;
 		String sql = "select count(*) from dbo.usuario_graduado_admin_login ugal "
 				+ "inner join uaa u on u.uaa_codigo = ugal.usg_uaa "

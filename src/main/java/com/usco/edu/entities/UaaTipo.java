@@ -9,59 +9,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "uaa_tipo", schema = "dbo")
-public class UaaTipo implements Serializable{
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "uat_codigo", columnDefinition = "integer")
-	private Long codigo;
+@Data
+@NoArgsConstructor
+public class UaaTipo implements Serializable {
 
-	@Column(name = "uat_nombre")
-	private String nombre;
-	
-	//@Column(name = "uat_estado")
-	//private int estado;
-	
-	public UaaTipo() {
-		// TODO Auto-generated constructor stub
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "uat_codigo", columnDefinition = "integer")
+    private Long codigo;
 
-	public UaaTipo(Long codigo, String nombre) {
-		this.codigo = codigo;
-		this.nombre = nombre;
-	}
+    @Column(name = "uat_nombre")
+    private String nombre;
 
-	public Long getCodigo() {
-		return codigo;
-	}
+    public UaaTipo(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	//public int getEstado() {
-	//	return estado;
-	/*}
-
-	public void setEstado(int estado) {
-		this.estado = estado;
-	}*/
-
-	@Override
-	public String toString() {
-		return "UaaTipo [codigo=" + codigo + ", nombre=" + nombre + "]";
-	}
-
-
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 }
