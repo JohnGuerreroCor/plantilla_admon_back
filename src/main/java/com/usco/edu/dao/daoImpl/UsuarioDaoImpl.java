@@ -15,6 +15,8 @@ public class UsuarioDaoImpl implements IUsuarioDao{
 	@Autowired
 	@Qualifier("JDBCTemplateLogin")
 	public JdbcTemplate jdbcTemplate;
+	
+	//REEMPLAZAR LA VISTA DE USURIO POR LA QUE IMPLEMENTA SU APLICATIVO, TENER EN CUENTA LAS VARIBALES DE LA CONSULTA IMPLEMENTADA EN EL ROWMAPPER
 
 	@Override
 	public Usuario buscarUsuario(String username) {
@@ -27,6 +29,8 @@ public class UsuarioDaoImpl implements IUsuarioDao{
 	}
 
 
+	//REEMPLAZAR LA VISTA DE USURIO POR LA QUE IMPLEMENTA SU APLICATIVO, TENER EN CUENTA LAS VARIBALES DE LA CONSULTA IMPLEMENTADA EN EL ROWMAPPER
+	
 	@Override
 	public boolean validarUsuario(String username) {
 		int result = 0;
