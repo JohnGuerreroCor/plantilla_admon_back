@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>usco.edu.co</groupId>
-	<artifactId>plantilla-administrador</artifactId>
+	<artifactId>plantilla_admon</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<name>plantilla-administrador</name>
+	<name>plantilla_admon</name>
 	<description>Plantilla inicial</description>
 
 	<properties>
