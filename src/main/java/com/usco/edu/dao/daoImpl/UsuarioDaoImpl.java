@@ -20,7 +20,7 @@ public class UsuarioDaoImpl implements IUsuarioDao{
 
 	@Override
 	public Usuario buscarUsuario(String username) {
-		String sql = "select * from dbo.usuario_graduado_admin_login ugal "
+		String sql = "select *, GETDATE() as horaInicioSesion from dbo.usuario_graduado_admin_login ugal "
 				+ "inner join uaa u on u.uaa_codigo = ugal.usg_uaa "
 				+ "inner join sede s on s.sed_codigo = u.sed_codigo "
 				+ "inner join persona p on p.per_codigo = ugal.up "
