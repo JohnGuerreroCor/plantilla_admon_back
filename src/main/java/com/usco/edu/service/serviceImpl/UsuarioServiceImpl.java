@@ -67,7 +67,7 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
 		Usuario usuario = usuariodao.buscarUsuario(username);
 
 		// CREAR UNA INSTANCIA DE ROLE Y ASIGNARLE LOS ROLES DEL USUARIO
-		Rol rol = new Rol();
+		Rol rol = new Rol(1, "ROLE_" + usuario.getRole());
 		ArrayList<Rol> roles = new ArrayList<>();
 		roles.add(rol);
 

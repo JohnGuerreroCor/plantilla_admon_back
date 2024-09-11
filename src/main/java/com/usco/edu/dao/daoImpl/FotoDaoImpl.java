@@ -15,14 +15,14 @@ public class FotoDaoImpl implements IFotoDao {
     public JdbcTemplate jdbcTemplate;
 
     @Override
-    public String obtenerTokenFoto(String atributos, String user) {
+    public String obtenerTokenFoto(String atributos) {
         // OBTENER EL TOKEN DE LA FOTO DEL CARNET SEGÚN LOS ATRIBUTOS Y EL USUARIO
         String sql = "SELECT dbo.getTokenDocumento(?)";
         return jdbcTemplate.queryForObject(sql, new Object[] { atributos }, String.class);
     }
 
     @Override
-    public String obtenerTokenFotoVisualizar(String atributos, String user) {
+    public String obtenerTokenFotoVisualizar(String atributos) {
         // OBTENER EL TOKEN DE LA FOTO DEL CARNET PARA VISUALIZACIÓN SEGÚN LOS ATRIBUTOS Y EL USUARIO
         String sql = "SELECT dbo.getTokenDocumento(?) as token";
         return jdbcTemplate.queryForObject(sql, new Object[] { atributos }, String.class);

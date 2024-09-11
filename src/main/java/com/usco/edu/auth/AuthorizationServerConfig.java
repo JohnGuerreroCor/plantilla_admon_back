@@ -48,8 +48,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .secret(passwordEncoder.encode("12345")) // CONTRASEÑA ENCRIPTADA
                 .scopes("read", "write") // ÁMBITOS DE ACCESO
                 .authorizedGrantTypes("password", "refresh_token") // TIPOS DE CONCESIÓN AUTORIZADOS
-                .accessTokenValiditySeconds(7200) // TIEMPO DE VALIDEZ DEL TOKEN DE ACCESO EN SEGUNDOS
-                .refreshTokenValiditySeconds(7200); // TIEMPO DE VALIDEZ DEL TOKEN DE ACTUALIZACIÓN EN SEGUNDOS
+                .accessTokenValiditySeconds(7200) // TIEMPO DE VALIDEZ DEL TOKEN DE ACCESO EN SEGUNDOS (7200 SEGUNDOS = 120 MINUTOS)
+                .refreshTokenValiditySeconds(7200); // TIEMPO DE VALIDEZ DEL TOKEN DE ACTUALIZACIÓN EN SEGUNDOS (7200 SEGUNDOS = 120 MINUTOS)
     }
 
     // CONFIGURACIÓN DE LOS ENDPOINTS DEL SERVIDOR DE AUTORIZACIÓN

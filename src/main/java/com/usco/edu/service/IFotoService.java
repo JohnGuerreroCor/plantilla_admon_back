@@ -8,8 +8,8 @@ import com.usco.edu.dto.Foto;
 
 public interface IFotoService {
 
-	ByteArrayInputStream mirarFoto(String codigo, String user, HttpServletResponse response);
+	ByteArrayInputStream mirarFoto(String codigo, HttpServletResponse response);
 	
-	Foto mirarFotoAntigua(String codigo, String user);
+	Foto mirarFotoAntigua(String codigo);
 
 }

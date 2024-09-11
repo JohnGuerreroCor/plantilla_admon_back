@@ -24,9 +24,9 @@ public class FotoRestController {
 	IFotoService service;
 	
     // ENDPOINT PARA OBTENER FOTO
-	@GetMapping("obtener-foto/{user}/{codigo}")
-	public ResponseEntity<InputStreamResource> foto(@PathVariable String user, HttpServletResponse response, @PathVariable String codigo) throws Exception{
-		ByteArrayInputStream stream = service.mirarFoto(codigo, user, response);
+	@GetMapping("obtener-foto/{codigo}")
+	public ResponseEntity<InputStreamResource> foto(HttpServletResponse response, @PathVariable String codigo) throws Exception{
+		ByteArrayInputStream stream = service.mirarFoto(codigo, response);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition", "attachment; filename=\" foto.png\"");
@@ -36,8 +36,8 @@ public class FotoRestController {
 	}
 	
     // ENDPOINT PARA OBTENER FOTO ANTIGUA
-	@GetMapping(path = "obtener-foto-antigua/{user}/{codigo}")
-	public Foto fotoAntigua(@PathVariable String user, @PathVariable String codigo) throws Exception{
-		return service.mirarFotoAntigua(codigo, user);
+	@GetMapping(path = "obtener-foto-antigua/{codigo}")
+	public Foto fotoAntigua(@PathVariable String codigo) throws Exception{
+		return service.mirarFotoAntigua(codigo);
 	}
 }

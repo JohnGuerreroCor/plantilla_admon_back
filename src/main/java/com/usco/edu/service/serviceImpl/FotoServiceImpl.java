@@ -40,12 +40,12 @@ public class FotoServiceImpl implements IFotoService {
 
     // MÉTODO PARA OBTENER UNA FOTO Y CONVERTIRLA EN UN FLUJO DE ENTRADA
     @Override
-    public ByteArrayInputStream mirarFoto(String perCodigo, String user, HttpServletResponse response) {
+    public ByteArrayInputStream mirarFoto(String perCodigo, HttpServletResponse response) {
 
         byte[] array = { 1, 2, 3, 4 };
 
         // OBTENER UNA CLAVE/TOKEN PARA LA FOTO
-        String Key = fotoCarnetDao.obtenerTokenFoto(perCodigo + "", user);
+        String Key = fotoCarnetDao.obtenerTokenFoto(perCodigo);
 
         RespuestaVerFoto respuesta = new RespuestaVerFoto();
 
@@ -65,9 +65,9 @@ public class FotoServiceImpl implements IFotoService {
 
     // MÉTODO PARA OBTENER UNA FOTO ANTIGUA Y DEVOLVERLA COMO UN OBJETO FOTOANTIGUA
     @Override
-    public Foto mirarFotoAntigua(String perCodigo, String user) {
+    public Foto mirarFotoAntigua(String perCodigo) {
         String aux = "";
-        String Key = fotoCarnetDao.obtenerTokenFoto(perCodigo, user);
+        String Key = fotoCarnetDao.obtenerTokenFoto(perCodigo);
         aux = enviarFotoClient.mostrarFotoAntigua(perCodigo, Key).toString();
         Foto foto = new Foto();
         foto.setUrl(aux);

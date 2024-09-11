@@ -15,14 +15,14 @@ public class DocumentoDaoImpl implements IDocumentoDao {
     public JdbcTemplate jdbcTemplate;
 
     @Override
-    public String obtenerTokenDocumento(String atributos, String user) {
+    public String obtenerTokenDocumento(String atributos) {
         // OBTENER EL TOKEN DEL DOCUMENTO SEGÚN LOS ATRIBUTOS Y EL USUARIO
         String sql = "SELECT dbo.getTokenDocumento(?)";
         return jdbcTemplate.queryForObject(sql, new Object[] { atributos }, String.class);
     }
 
     @Override
-    public String obtenerTokenDocumentoVisualizar(String atributos, String user) {
+    public String obtenerTokenDocumentoVisualizar(String atributos) {
         // OBTENER EL TOKEN DEL DOCUMENTO PARA VISUALIZACIÓN SEGÚN LOS ATRIBUTOS Y EL USUARIO
         String sql = "SELECT dbo.getTokenDocumento(?) as token";
         return jdbcTemplate.queryForObject(sql, new Object[] { atributos }, String.class);
