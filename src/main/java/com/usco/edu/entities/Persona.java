@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Persona {
 
-    
-    private Long codigo;
-    private String nombre;
-    private String apellido;
-    private String identificacion;
-    private String emailInterno;
-    
+	private Long codigo;
+	private String nombre;
+	private String apellido;
+	private String identificacion;
+	private String emailInterno;
+
 }
